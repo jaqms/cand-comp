@@ -44,14 +44,26 @@
     <div class="tab-content">
 
       <div role="tabpanel" class="tab-pane active" id="home">
+
         <div class="candidate-issue">
           <img src="../img/Lynne.jpeg" class="picture img-circle" >
-          <p>"Teacher's Unions: Decidedly pro-teacher, the campaign so far has been very education-focused. However, in an article in Philly Mag, Abraham questioned the role of the teacher's union in the overall decline in the quality of public education in Philadelphia. This magazine article went to print before the Teacher's Union voted to back a mayoral candidate. Ultimately, Jim Kenney won their support.<br>
-            <br>
-          Charter Schools: On the board of I-LEAD, a charter school in Reading, PA; Has on record that she doesn't favor or disfavor charter schools in early 2015; These conflicting accounts may be due to the in-progress communication between the SRC (School Reform Commission) and Governor Tom Wolf (D-PA) about charter schools; In March 2015, when the decision that charter schools would continue to function finalized, she expressed concern about the see-saw of power and approach between the Philadelphia Federal Teacher's union and the charter school, citing that it was overall failing the children."</p>
+          <div class="points">
+            <p>"Teacher's Unions: Decidedly pro-teacher, the campaign so far has been very education-focused. However, in an article in Philly Mag, Abraham questioned the role of the teacher's union in the overall decline in the quality of public education in Philadelphia. This magazine article went to print before the Teacher's Union voted to back a mayoral candidate. Ultimately, Jim Kenney won their support."</p>
+          </div>
 
           <div class="show-more">
-            <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down"></span></a>
+            <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
+          </div>
+        </div>
+
+        <div class="candidate-issue">
+          <img src="../img/Lynne.jpeg" class="picture img-circle" >
+          <div class="points">
+            <p>"Teacher's Unions: Decidedly pro-teacher, the campaign so far has been very education-focused. However, in an article in Philly Mag, Abraham questioned the role of the teacher's union in the overall decline in the quality of public education in Philadelphia. This magazine article went to print before the Teacher's Union voted to back a mayoral candidate. Ultimately, Jim Kenney won their support."</p>
+          </div>
+
+          <div class="show-more">
+            <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
           </div>
         </div>
       </div>
@@ -67,6 +79,16 @@
     </div><!-- /.container -->
 
     <script src="../lib/bootstrap.min.js"></script>
+    <script>
+      window.onload = function () {
+        $('.candidate-issue .show-more a').on('click', function(evt) {
+          evt.preventDefault();
+          var target = $(evt.currentTarget);
+          target.closest('.candidate-issue').toggleClass('expanded');
+          target.find('.expand-icon').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+        });
+      };
+    </script>
 
   </body>
 </html>

@@ -16,24 +16,27 @@ body {
  width:100px;
  float:left;
  margin-right:1em;
-
+ z-index: 101;
+ position: relative;
 }
 
 #page-holder {
   height:100%;
 }
 
-.candidate-issue p {
-  height: 120px;
+.candidate-issue .points {
+  height: 96px;
   overflow: hidden;
 }
 
 .candidate-issue .show-more {
   position: relative;
   z-index: 100;
-  top: -30px;
+  top: -12px;
+  height: 12px;
   text-align: center;
   padding-top: 0.5em;
+  width: 100%;
 
   background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
@@ -49,6 +52,12 @@ body {
 	height:128px;
 }
 
+.candidate-issue,
+.candidate-issue .points {
+  -webkit-transition: height 2s, -webkit-transform 2s;
+  transition: height 2s, transform 2s;
+}
+
 .candidate-issue > img {
 	float:left;
 	background-color: black;
@@ -56,9 +65,17 @@ body {
 	height:96px;
 }
 
-.candidate-issue > div {
+.candidate-issue.expanded {
+  height: auto;
+}
+
+.candidate-issue.expanded .points {
+  height: auto;
+}
+
+/*.candidate-issue > div {
 	float:left;
 	padding-left:16px;
 	height:96px;
 }
-
+*/
