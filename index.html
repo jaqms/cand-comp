@@ -49,10 +49,28 @@
         ABOUT
         </div>
     </script>
+
+    <script id="issue-detail-page" type="text/x-handlebars-template">
+        <div class="container">
+            <h1 class="text-center">{{name}}</h1>
+            <div id="candidate-issue-list" class="row">             
+            </div>
+        </div>
+    </script>
     
     <script id="template-issue-tile" type="text/x-handlebars-template">
         <div class="col-xs-6">
-            <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">{{name}}</a>
+            <a class="btn btn-default btn-lg issue-list-btn" href="#issues/{{name}}">{{name}}</a>
+        </div>
+    </script>
+
+    <script id="template-candidate-issue" type="text/x-handlebars-template">
+        <div class="row candidate-issue">
+            <img style="float:left">
+            <div style="float:left">
+                <div>John Doe</div>
+                <div>I said this and I did that</div>
+            </div>
         </div>
     </script>
 

@@ -23,3 +23,22 @@ body {
 	height:100%;
 }
 
+.candidate-issue {
+	border: 1px solid black;
+	padding:16px;
+	height:128px;
+}
+
+.candidate-issue > img {
+	float:left;
+	background-color: black;
+	width:96px;
+	height:96px;
+}
+
+.candidate-issue > div {
+	float:left;
+	padding-left:16px;
+	height:96px;
+}
+

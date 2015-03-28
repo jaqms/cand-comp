@@ -79,8 +79,12 @@ function showIssuesPage() {
 	issueCollection.issues.forEach(function (issue) {
 		var source = $('#template-issue-tile').html();
 		var template = Handlebars.compile(source);
-		var html = template(JSON.parse(JSON.stringify(issue)));
-		$('#issue-tile-list').append(html);
+		var html = template(issue);
+		var tile = $(html);
+		tile.bind('click', function (issue) {
+			showIssueDetailPage(issue);
+		}.bind(tile, issue));
+		$('#issue-tile-list').append(tile);
 	})
 }
 
@@ -92,10 +96,14 @@ function showAboutPage() {
 	displayPage('#about-page');
 }
 
-function displayPage(templateTag) {
+function showIssueDetailPage(issue) {
+	displayPage('#issue-detail-page', issue);
+}
+
+function displayPage(templateTag, data) {
 	var source = $(templateTag).html();
 	var template = Handlebars.compile(source);
-	var html = template({});
+	var html = template(data || {});
 	$('#page-holder').html(html);
 }
 
@@ -135,16 +143,17 @@ window.onload = function () {
 
 	$(window).bind('hashchange', function(e) {
 		var page = document.URL.substring(document.URL.indexOf('#')+1);
-		switch (page) {
-			case "issues":
+		
+		if (page.indexOf("issues") === 0) {
+			if (page.indexOf("/") < 0) {
 				showIssuesPage();
-				break;
-			case "candidates":
-				showCandidatesPage();
-				break;
-			case "about":
-				showAboutPage();
-				break;
+			}
+		}
+		else if (page.indexOf("candidates") === 0) {
+			showCandidatesPage();
+		}
+		else if (page.indexOf("about") === 0) {
+			showAboutPage();
 		}
 	});
 }
