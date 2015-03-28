@@ -18,11 +18,11 @@ IssueCollection.prototype.findByName = function (name) {
 }
 
 function Issue(json) {
-	this.id = json['gsx$name']
-	this.name = json['gsx$name'];
-	this.slug = json['gsx$slug'];
-	this.icon = json['gsx$icon'];
-	this.color = json['gsx$color'];
+	this.id = json['gsx$name']['$t'];
+	this.name = json['gsx$name']['$t'];
+	this.slug = json['gsx$slug']['$t'];
+	this.icon = json['gsx$icon']['$t'];
+	this.color = json['gsx$color']['$t'];
 }
 
 function CandidateCollection() {
@@ -66,7 +66,6 @@ Candidate.prototype.setIssueData = function (json) {
 	});
 }
 
-
 function getGoogleSheet(id, callback) {
 	$.getJSON("https://spreadsheets.google.com/feeds/list/1y4BwQfdE0-isBz8VptmS0n_52TyLRv7BPLp5K5QHqho/" + id + "/public/values?alt=json",
 		function (data) {
@@ -74,7 +73,26 @@ function getGoogleSheet(id, callback) {
 		});
 }
 
-function showPage(templateTag) {
+function showIssuesPage() {
+	displayPage('#issues-page');
+
+	issueCollection.issues.forEach(function (issue) {
+		var source = $('#template-issue-tile').html();
+		var template = Handlebars.compile(source);
+		var html = template(JSON.parse(JSON.stringify(issue)));
+		$('#issue-tile-list').append(html);
+	})
+}
+
+function showCandidatesPage() {
+	displayPage('#candidates-page');
+}
+
+function showAboutPage() {
+	displayPage('#about-page');
+}
+
+function displayPage(templateTag) {
 	var source = $(templateTag).html();
 	var template = Handlebars.compile(source);
 	var html = template({});
@@ -82,16 +100,22 @@ function showPage(templateTag) {
 }
 
 window.onload = function () {
-	window.issues = new IssueCollection();
-	window.candidates = new CandidateCollection();
+	window.issueCollection = new IssueCollection();
+	window.candidateCollection = new CandidateCollection();
+
+	window.ISSUE_SHEET_ID = 3;
+	window.CANDIDATE_BIO_SHEET_ID = 2;
+	window.CANDIDATE_ISSUE_SHEET_ID = 4;
 	
-	/*getGoogleSheet(3, function (data) {
+	getGoogleSheet(ISSUE_SHEET_ID, function (data) {
 		data['feed']['entry'].forEach(function (entry) {
 			var issue = new Issue(entry);
-			issueCollection.add(candidate);
+			issueCollection.add(issue);
 		});
 
-		getGoogleSheet(2, function (data) {
+		showIssuesPage();
+
+		/*getGoogleSheet(2, function (data) {
 			data['feed']['entry'].forEach(function (entry) {
 				var candidate = new Candidate(entry['gsx$name']['$t']);
 				candidate.setBioData(entry);
@@ -106,23 +130,21 @@ window.onload = function () {
 					}
 				});
 			});
-		});
-	});*/
+		});*/
+	});
 
 	$(window).bind('hashchange', function(e) {
 		var page = document.URL.substring(document.URL.indexOf('#')+1);
 		switch (page) {
 			case "issues":
-				showPage('#issues-page');
+				showIssuesPage();
 				break;
 			case "candidates":
-				showPage('#candidates-page');
+				showCandidatesPage();
 				break;
 			case "about":
-				showPage('#about-page');
+				showAboutPage();
 				break;
 		}
 	});
-
-	showPage('#issues-page');
 }

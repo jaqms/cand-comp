@@ -32,31 +32,7 @@
     <script id="issues-page" type="text/x-handlebars-template">
         <div class="container">
             <div class="issue-list">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">Education</a>
-                    </div>
+                <div id="issue-tile-list" class="row">
                 </div>
             </div>
         </div>
@@ -71,6 +47,12 @@
     <script id="about-page" type="text/x-handlebars-template">
         <div class="container">
         ABOUT
+        </div>
+    </script>
+    
+    <script id="template-issue-tile" type="text/x-handlebars-template">
+        <div class="col-xs-6">
+            <a class="btn btn-default btn-lg issue-list-btn" href="#!issue/education">{{name}}</a>
         </div>
     </script>
 
