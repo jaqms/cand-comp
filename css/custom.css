@@ -24,6 +24,7 @@ body {
 }
 
 .candidate-issue {
+	overflow:hidden;
 	border: 1px solid black;
 	padding:16px;
 	height:128px;
@@ -36,9 +37,11 @@ body {
 	height:96px;
 }
 
-.candidate-issue > div {
+.candidate-issue > .candidate-issue-text {
 	float:left;
+	overflow:hidden;
 	padding-left:16px;
+	width:90%;
 	height:96px;
 }
 

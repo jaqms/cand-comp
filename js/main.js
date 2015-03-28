@@ -52,18 +52,18 @@ function Candidate(id) {
 
 Candidate.prototype.setBioData = function (json) {
 	Object.keys(json).forEach(function (i) {
-		if (i.indexOf("gsx") === 0 && i !== 'gsx$name') {
+		if (i.indexOf("gsx") === 0) {
 			this.bioData[i.substring(4)] = json[i]['$t'];
 		}
-	});
+	}.bind(this));
 }
 
 Candidate.prototype.setIssueData = function (json) {
 	Object.keys(json).forEach(function (i) {
-		if (i.indexOf("gsx") === 0 && i !== 'gsx$name') {
+		if (i.indexOf("gsx") === 0) {
 			this.issueData[i.substring(4)] = json[i]['$t'];
 		}
-	});
+	}.bind(this));
 }
 
 function getGoogleSheet(id, callback) {
@@ -98,6 +98,16 @@ function showAboutPage() {
 
 function showIssueDetailPage(issue) {
 	displayPage('#issue-detail-page', issue);
+	candidateCollection.candidates.forEach(function (candidate) {
+		var issueNameKey = issue.id.replace(/ /g, '').toLowerCase();
+		var source = $('#template-candidate-issue').html();
+		var template = Handlebars.compile(source);
+		var html = template({'name': candidate.bioData.name, 'text': candidate.issueData[issueNameKey]});
+		var row = $(html);
+		console.log(JSON.stringify(candidate.issueData))
+		$('#candidate-issue-list').append(row);
+		console.log(issueNameKey);
+	});
 }
 
 function displayPage(templateTag, data) {
@@ -123,14 +133,14 @@ window.onload = function () {
 
 		showIssuesPage();
 
-		/*getGoogleSheet(2, function (data) {
+		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
 			data['feed']['entry'].forEach(function (entry) {
 				var candidate = new Candidate(entry['gsx$name']['$t']);
 				candidate.setBioData(entry);
 				candidateCollection.add(candidate);
 			});
 			
-			getGoogleSheet(1, function (data) {
+			getGoogleSheet(CANDIDATE_ISSUE_SHEET_ID, function (data) {
 				data['feed']['entry'].forEach(function (entry) {
 					var candidate = candidateCollection.findByName(entry['gsx$name']['$t']);
 					if (candidate) {
@@ -138,7 +148,7 @@ window.onload = function () {
 					}
 				});
 			});
-		});*/
+		});
 	});
 
 	$(window).bind('hashchange', function(e) {
