@@ -71,14 +71,21 @@ function getGoogleSheet(id, callback) {
 	$.getJSON("https://spreadsheets.google.com/feeds/list/1y4BwQfdE0-isBz8VptmS0n_52TyLRv7BPLp5K5QHqho/" + id + "/public/values?alt=json",
 		function (data) {
 			callback(data)
-		};
+		});
+}
+
+function showPage(templateTag) {
+	var source = $(templateTag).html();
+	var template = Handlebars.compile(source);
+	var html = template({});
+	$('#page-holder').html(html);
 }
 
 window.onload = function () {
 	window.issues = new IssueCollection();
 	window.candidates = new CandidateCollection();
 	
-	getGoogleSheet(3, function (data) {
+	/*getGoogleSheet(3, function (data) {
 		data['feed']['entry'].forEach(function (entry) {
 			var issue = new Issue(entry);
 			issueCollection.add(candidate);
@@ -100,6 +107,22 @@ window.onload = function () {
 				});
 			});
 		});
+	});*/
+
+	$(window).bind('hashchange', function(e) {
+		var page = document.URL.substring(document.URL.indexOf('#')+1);
+		switch (page) {
+			case "issues":
+				showPage('#issues-page');
+				break;
+			case "candidates":
+				showPage('#candidates-page');
+				break;
+			case "about":
+				showPage('#about-page');
+				break;
+		}
 	});
 
+	showPage('#issues-page');
 }
