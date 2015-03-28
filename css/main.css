@@ -1,0 +1,30 @@
+.cand-table {
+	display:block;
+	border-spacing:0;
+	border-collapse:collapse;
+}
+
+.cand-table td {
+	display:block;
+	width: 128px;
+	height: 128px;
+	border: 1px solid black;
+}
+
+.cand-table tbody {
+	float:right;
+}
+
+
+#topic-col {
+	float:left;
+}
+
+#topic-col th {
+	display:block;
+	width: 128px;
+	height: 128px;
+}
+
+#pic-row {
+}
