@@ -96,6 +96,9 @@ function showCandidatesPage() {
 		var template = Handlebars.compile(source);
 		var html = template({'name': candidate.bioData.name});
 		var tile = $(html);
+		tile.bind('click', function (candidate) {
+			showCandidateDetailPage(candidate);
+		}.bind(tile, candidate));
 		$('#candidate-tile-list').append(tile);
 	})
 }
@@ -114,6 +117,10 @@ function showIssueDetailPage(issue) {
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
 	});
+}
+
+function showCandidateDetailPage(candidate) {
+	displayPage('#candidate-detail-page', candidate);
 }
 
 function displayPage(templateTag, data) {
