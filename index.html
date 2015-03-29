@@ -62,8 +62,21 @@
    
     <script id="candidate-detail-page" type="text/x-handlebars-template">
         <div class="container">
-            <div class="profile centered">
-                <div class="candidate-image" style="background-image: url(img/Lynne.jpeg)">
+            <div class="profile centered" style="height:100%">
+                <div style="height:192px">
+                    <div class="candidate-image" style="background-image: url(img/Lynne.jpeg); float:left; width:192px;"></div>
+                    <div style="margin-left:192px; padding-left:7.5%; padding-top:8px">
+                        <p style="font-size:40px">John Doe</p>
+                        <p style="font-size:20px; margin-left:10%">Democrat</p>
+                        <p style="font-size:20px; margin-left:10%">Age 92, Female</p>
+                    </div>
+                </div>
+                <div style="margin-top:32px">
+                    <img src="img/facebook.png" width="48" height="48" style="margin-left:8px; margin-right:8px">
+                    <img src="img/twitter.png" width="48" height="48" style="margin-right:8px">
+                    <img src="img/linkedin.png" width="48" height="48" style="margin-right:8px">
+                </div>
+                <hr />
             </div>
         </div>
     </script>
