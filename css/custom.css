@@ -194,6 +194,35 @@ body {
   color: white;
 }
 
+.home-page {
+  text-align: center;
+}
+
+.home-page .btn-lg {
+  display: block;
+  width: 100%;
+  height: 100px;
+  line-height: 78px;
+}
+
+.home-page img {
+  margin-top: 20px;
+}
+
+.home-page p {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid silver;
+  padding-bottom: 0;
+
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
 @media (min-width: 768px) {
   .candidate-image .picture {
     width: 192px;

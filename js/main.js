@@ -230,6 +230,11 @@ function showCandidateDetailPage(candidate) {
 	});
 }
 
+function showHomePage() {
+	displayPage('#template-home-page', {});
+	setTitle('Home');
+}
+
 function displayPage(templateTag, data) {
 	if (templateTag === '#issue-detail-page') {
 		showIssueDetailNav(data);
@@ -249,13 +254,17 @@ function expandCandidateIssue($el) {
 }
 
 function goToPage() {
-	var page = document.URL.substring(document.URL.indexOf('#')+1);
+	var pageStrPos = document.URL.indexOf('#') + 1;
+	var page = document.URL.substring(pageStrPos || document.URL.length);
 	var parts = page.split('/');
 
 	$('.navbar-nav li').removeClass('active');
 	$('.navbar-nav').find('[href="#' + page + '"]').parent().addClass('active');
 
-	if (page.indexOf("issues") === 0) {
+	if (page === "") {
+		showHomePage();
+	}
+	else if (page.indexOf("issues") === 0) {
 		if (page.indexOf("/") < 0) {
 			showIssuesPage();
 		} else if (parts.length === 2) {
