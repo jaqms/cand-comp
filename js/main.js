@@ -183,7 +183,7 @@ function centerIssueInNav(issue) {
 	var activeTabX = activeTab.position().left;
 	var centeredX = (navHolder.width() - activeTab.width()) / 2;
 
-	navList.scrollLeft(activeTabX + currentScrollX - centeredX);
+	navList.animate({scrollLeft: activeTabX + currentScrollX - centeredX});
 }
 
 function showIssueDetailPage(issue) {
