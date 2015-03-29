@@ -90,3 +90,7 @@ body {
   height: auto;
   overflow: visible;
 }
+
+.issue-list-btn {
+  white-space: normal;
+}
