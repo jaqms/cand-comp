@@ -1,12 +1,11 @@
 <html>
-	<head>
+    <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<script src="lib/jquery-1.11.2.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <script src="lib/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
-	</head>
-	<body>
+    </head>
+    <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -19,28 +18,115 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Issues</a></li>
-            <li><a href="#about">Candidates</a></li>
-            <li><a href="#contact">About</a></li>
+            <li><a href="#issues">Issues</a></li>
+            <li><a href="#candidates">Candidates</a></li>
+            <li><a href="#about">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-		<table class="table">
-			<tr>
-				<td>A</td>
-				<td>B</td>
-				<td>C</td>
-			</tr>
-			<tr>
-				<td>D</td>
-				<td>E</td>
-				<td>G</td>
-			</tr>
-		</table>
+    <div id="page-holder">
+    </div>
+
+    <script id="issues-page" type="text/x-handlebars-template">
+        <div class="container">
+            <div class="issue-list">
+                <div id="issue-tile-list" class="row">
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="candidates-page" type="text/x-handlebars-template">
+        <div class="container">
+            <div class="candidate-list" style="display:block; margin-left:auto; margin-right:auto; padding-top:5%;">
+                <div id="candidate-tile-list" class="row">
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="about-page" type="text/x-handlebars-template">
+        <div class="container">
+        </div>
+    </script>
+
+    <script id="issue-detail-page" type="text/x-handlebars-template">
+        <div class="container">
+            <h1 class="text-center">{{name}}</h1>
+            <div id="candidate-issue-list" class="row">
+            </div>
+        </div>
+    </script>
+
+    <script id="candidate-detail-page" type="text/x-handlebars-template">
+        <div class="container">
+            <div class="profile centered">
+                <div style="height:192px">
+                    <div class="candidate-image" style="float:left; width:192px;">
+                        <img class="picture img-circle" src="img/Lynne.jpeg">
+                    </div>
+                    <div style="margin-left:192px; padding-left:7.5%; padding-top:8px">
+                        <p style="font-size:40px">{{name}}</p>
+                        <p style="font-size:20px; margin-left:10%">{{party}}</p>
+                        <p style="font-size:20px; margin-left:10%">Age {{age}}, {{gender}}</p>
+                    </div>
+                </div>
+                <div style="margin-top:32px">
+                    <img src="img/facebook.png" width="48" height="48" style="margin-left:8px; margin-right:8px">
+                    <img src="img/twitter.png" width="48" height="48" style="margin-right:8px">
+                    <img src="img/linkedin.png" width="48" height="48" style="margin-right:8px">
+                </div>
+                <div id="profile-issue-list"></div>
+            </div>
+        </div>
+    </script>
+
+    <script id="template-profile-issue" type="text/x-handlebars-template">
+        <hr />
+        <div class="row">
+            <h3>{{name}}</h3>
+            <div style="margin-top:16px; padding-left:24px">{{text}}</div>
+        </div>
+    </script>
+
+    <script id="template-issue-tile" type="text/x-handlebars-template">
+        <div class="col-xs-6">
+            <a class="btn btn-default btn-lg issue-list-btn" href="#issues/{{name}}">{{name}}</a>
+        </div>
+    </script>
+
+    <script id="template-candidate-tile" type="text/x-handlebars-template">
+        <div class="col-xs-6 col-sm-3 candidate-tile">
+            <div>
+                <div class="candidate-image">
+                		<img class="picture img-circle" src="{{pic}}">
+                </div>
+            </div>
+            <div class="text-center" style="padding:8px">
+                {{name}}
+            </div>
+        </div>
+    </script>
+
+    <script id="template-candidate-issue" type="text/x-handlebars-template">
+        <div class="row candidate-issue">
+	          <img src="{{pic}}" class="picture img-circle" >
+            <div class="candidate-issue-text points">
+                <p><strong>{{name}}</strong></p>
+                <p>{{text}}</p>
+            </div>
+
+  	        <div class="show-more">
+	  	          <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
+      	    </div>
+        </div>
+    </script>
 
     <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/handlebars-v3.0.0.js"></script>
+    <script src="js/main.js"></script>
 
-	</body>
+    </body>
 </html>

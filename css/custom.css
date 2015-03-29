@@ -1,12 +1,115 @@
 .white {
-	color: white;
+  color: white;
 }
 
 body {
   padding-top: 50px;
+  background-color: #004586;
 }
 
 .issue-list-btn {
   width: 100%;
   margin-top: 1em;
+}
+
+.picture
+{
+ width:100px;
+ float:left;
+ margin-right:1em;
+ z-index: 101;
+ position: relative;
+}
+
+.candidate-tile {
+  text-align: center;
+  color: white;
+}
+
+.candidate-image .picture {
+  float: none;
+  position: static;
+  margin-right: 0;
+}
+
+.centered {
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#page-holder {
+  height:100%;
+}
+
+.candidate-issue .points {
+  height: 96px;
+  overflow: hidden;
+}
+
+.candidate-issue .show-more {
+  position: relative;
+  z-index: 100;
+  top: -12px;
+  height: 12px;
+  text-align: center;
+  padding-top: 0.5em;
+  width: 100%;
+
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%); /* W3C */
+}
+
+.candidate-issue {
+	overflow:hidden;
+	border: 1px solid black;
+	padding:16px;
+	height:128px;
+  background-color: #fff;
+  border-radius: 1em;
+  margin-bottom: 1em;
+}
+
+.candidate-issue,
+.candidate-issue .points {
+  -webkit-transition: height 2s, -webkit-transform 2s;
+  transition: height 2s, transform 2s;
+}
+
+.candidate-issue > img {
+	float:left;
+	background-color: black;
+	width:96px;
+	height:96px;
+}
+
+.candidate-issue.expanded {
+  height: auto;
+}
+
+.candidate-issue.expanded .points {
+  height: auto;
+  overflow: visible;
+}
+
+.profile {
+	background-color: rgba(255, 255, 255, 0.1);
+	padding:5%;
+	margin-top:5%;
+	width:80%;
+	color:dddddd;
+}
+
+.issue-list-btn {
+  white-space: normal;
+}
+
+@media (min-width: 768px) {
+  .candidate-image .picture {
+    width: 192px;
+  }
 }
