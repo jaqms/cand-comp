@@ -29,21 +29,13 @@ body {
 .candidate-image .picture {
   float: none;
   position: static;
+  margin-right: 0;
 }
 
 .centered {
 	display:block;
 	margin-left:auto;
 	margin-right:auto;
-}
-
-.candidate-image {
-	width:192px;
-	height:192px;
-	border-radius:50%;
-	background-repeat:no-repeat;
-	background-position:50%;
-	background-size:cover;
 }
 
 #page-holder {
