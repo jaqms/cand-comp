@@ -82,14 +82,6 @@ body {
 	height:96px;
 }
 
-.candidate-issue > .candidate-issue-text {
-	float:left;
-	overflow:hidden;
-	padding-left:16px;
-	width:90%;
-	height:96px;
-}
-
 .candidate-issue.expanded {
   height: auto;
 }
