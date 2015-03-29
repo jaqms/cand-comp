@@ -73,8 +73,13 @@ function getGoogleSheet(id, callback) {
 		});
 }
 
+function setTitle(title) {
+	$('.navbar-brand').html(title || '');
+}
+
 function showIssuesPage() {
 	displayPage('#issues-page');
+	setTitle('The Issues');
 
 	issueCollection.issues.forEach(function (issue) {
 		var source = $('#template-issue-tile').html();
@@ -90,6 +95,7 @@ function showIssuesPage() {
 
 function showCandidatesPage() {
 	displayPage('#candidates-page');
+	setTitle('Candidates');
 
 	candidateCollection.candidates.forEach(function (candidate) {
 		var source = $('#template-candidate-tile').html();
@@ -105,10 +111,13 @@ function showCandidatesPage() {
 
 function showAboutPage() {
 	displayPage('#about-page');
+	setTitle();
 }
 
 function showIssueDetailPage(issue) {
 	displayPage('#issue-detail-page', issue);
+	setTitle('The Issues');
+
 	candidateCollection.candidates.forEach(function (candidate) {
 		var issueNameKey = issue.id.replace(/ /g, '').toLowerCase();
 		var source = $('#template-candidate-issue').html();
@@ -131,6 +140,7 @@ function showIssueDetailPage(issue) {
 
 function showCandidateDetailPage(candidate) {
 	displayPage('#candidate-detail-page', candidate);
+	setTitle('Candidates');
 }
 
 function displayPage(templateTag, data) {
