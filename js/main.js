@@ -1,3 +1,19 @@
+Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
+});
+
+Handlebars.registerHelper('is', function(v1, v2, options) {{
+	return (v1 === v2 ? options.fn(this) : options.inverse(this));
+}})
+
 function IssueCollection(json) {
 	this.issues = [];
 }
@@ -48,6 +64,24 @@ function Candidate(id) {
 	this.id = id;
 	this.bioData = {};
 	this.issueData = {};
+}
+
+Candidate.formatIssueText = function (text) {
+	if (text.length === 0) {
+		return "n/a"
+	}
+	var parts = text.split('; ');
+	if (parts.length > 0) {
+		var finalText = "";
+		parts.forEach(function (part) {
+			console.log(part)
+			var subParts = part.split(': ');
+			var newText = "<b>" + subParts[0] + "</b>: " + subParts[1] + "<br />";
+			finalText += newText;
+		});
+		return finalText;
+	}
+	return text;
 }
 
 Candidate.prototype.setBioData = function (json) {
@@ -114,8 +148,47 @@ function showAboutPage() {
 	setTitle();
 }
 
+function hideIssueDetailNav() {
+	var navHolder = $('#issue-detail-nav-holder');
+	navHolder.empty();
+}
+
+function showIssueDetailNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+
+	if (navHolder.is(':empty')) {
+		var source = $('#template-issue-detail-nav').html();
+		var template = Handlebars.compile(source);
+		var html = template($.extend({'issues': issueCollection.issues}, issue));
+		navHolder.html(html);
+	}
+
+	activateIssueInNav(issue);
+	centerIssueInNav(issue);
+}
+
+function activateIssueInNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+	navHolder.find('li').removeClass('active');
+	navHolder.find('a[href="#issues/' + issue.name + '"]').parent().addClass('active');
+}
+
+function centerIssueInNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+	var navList = navHolder.find('.issue-detail-nav');
+	var activeTab = navList.find('.active');
+	var lastTab = navList.find('li:last-child');
+
+	var currentScrollX = navList.scrollLeft();
+	var activeTabX = activeTab.position().left;
+	var centeredX = (navHolder.width() - activeTab.width()) / 2;
+
+	navList.animate({scrollLeft: activeTabX + currentScrollX - centeredX});
+}
+
 function showIssueDetailPage(issue) {
-	displayPage('#issue-detail-page', issue);
+	var foundIssue = issueCollection.findByName(issue.id);
+	displayPage('#issue-detail-page', foundIssue);
 	setTitle('The Issues');
 
 	candidateCollection.candidates.forEach(function (candidate) {
@@ -124,7 +197,7 @@ function showIssueDetailPage(issue) {
 		var html = template({
 			'pic': candidate.bioData.pic,
 			'name': candidate.bioData.name,
-			'text': candidate.issueData[issue.id]
+			'text': Candidate.formatIssueText(candidate.issueData[issue.id])
 		});
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
@@ -150,14 +223,25 @@ function showCandidateDetailPage(candidate) {
 		var template = Handlebars.compile(source);
 		var html = template({
 			'name': matchingIssue.name,
-			'text': candidate.issueData[issueKey]
+			'text': Candidate.formatIssueText(candidate.issueData[issueKey])
 		});
 		var row = $(html);
 		$('#profile-issue-list').append(row);
 	});
 }
 
+function showHomePage() {
+	displayPage('#template-home-page', {});
+	setTitle('Home');
+}
+
 function displayPage(templateTag, data) {
+	if (templateTag === '#issue-detail-page') {
+		showIssueDetailNav(data);
+	} else {
+		hideIssueDetailNav();
+	}
+
 	var source = $(templateTag).html();
 	var template = Handlebars.compile(source);
 	var html = template(data || {});
@@ -170,13 +254,17 @@ function expandCandidateIssue($el) {
 }
 
 function goToPage() {
-	var page = document.URL.substring(document.URL.indexOf('#')+1);
+	var pageStrPos = document.URL.indexOf('#') + 1;
+	var page = document.URL.substring(pageStrPos || document.URL.length);
 	var parts = page.split('/');
 
 	$('.navbar-nav li').removeClass('active');
 	$('.navbar-nav').find('[href="#' + page + '"]').parent().addClass('active');
 
-	if (page.indexOf("issues") === 0) {
+	if (page === "") {
+		showHomePage();
+	}
+	else if (page.indexOf("issues") === 0) {
 		if (page.indexOf("/") < 0) {
 			showIssuesPage();
 		} else if (parts.length === 2) {
@@ -191,21 +279,33 @@ function goToPage() {
 	}
 }
 
+function updateLoader(status, value) {
+	$('.load-progress-container .status').html(status);
+	$('.load-progress .progress-bar').css({width: value + '%'});
+}
+
 window.onload = function () {
 	window.issueCollection = new IssueCollection();
 	window.candidateCollection = new CandidateCollection();
 
 	window.ISSUE_SHEET_ID = 4;
-	window.CANDIDATE_BIO_SHEET_ID = 2;
-	window.CANDIDATE_ISSUE_SHEET_ID = 3;
+	window.CANDIDATE_BIO_SHEET_ID = 3;
+	window.CANDIDATE_ISSUE_SHEET_ID = 2;
+
+	updateLoader('Loading The Issues...', 25);
 
 	getGoogleSheet(ISSUE_SHEET_ID, function (data) {
+		updateLoader('Loading The Candidates...', 50);
+
 		data['feed']['entry'].forEach(function (entry) {
 			var issue = new Issue(entry);
 			issueCollection.add(issue);
 		});
 
 		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
+			console.log(data);
+			updateLoader('Loading The Platforms...', 75);
+
 			data['feed']['entry'].forEach(function (entry) {
 				var candidate = new Candidate(entry['gsx$name']['$t']);
 				candidate.setBioData(entry);
@@ -213,6 +313,8 @@ window.onload = function () {
 			});
 
 			getGoogleSheet(CANDIDATE_ISSUE_SHEET_ID, function (data) {
+				updateLoader('Done!', 100);
+
 				data['feed']['entry'].forEach(function (entry) {
 					var candidate = candidateCollection.findByName(entry['gsx$name']['$t']);
 					if (candidate) {

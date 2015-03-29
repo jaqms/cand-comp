@@ -1,6 +1,9 @@
 <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#7395B8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
         <script src="lib/jquery-1.11.2.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
@@ -26,11 +29,20 @@
       </div>
     </nav>
 
+    <div id="issue-detail-nav-holder"></div>
+
     <div id="page-holder">
+        <div class="container load-progress-container">
+            <div class="status"></div>
+            <div class="load-progress progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%">
+              </div>
+            </div>
+        </div>
     </div>
 
     <script id="issues-page" type="text/x-handlebars-template">
-        <div class="container">
+        <div class="container page">
             <div class="issue-list">
                 <div id="issue-tile-list" class="row">
                 </div>
@@ -39,7 +51,7 @@
     </script>
 
     <script id="candidates-page" type="text/x-handlebars-template">
-        <div class="container">
+        <div class="container page">
             <div class="candidate-list" style="display:block; margin-left:auto; margin-right:auto; padding-top:5%;">
                 <div id="candidate-tile-list" class="row">
                 </div>
@@ -48,35 +60,62 @@
     </script>
 
     <script id="about-page" type="text/x-handlebars-template">
-        <div class="container">
+        <div class="container page">
         </div>
     </script>
 
+    <script id="template-home-page" type="text/x-handlebars-template">
+        <div class="container page home-page">
+            <div class="text-center"><img src="img/phila-logo-text.png"></div>
+
+            <p> Get informed for the 2015<br>
+                Philadelphia Mayoral Election </p>
+
+            <a href="#candidates" class="btn btn-default btn-lg">The Candidates</a>
+            <hr>
+            <a href="#issues" class="btn btn-default btn-lg">The Issues</a>
+        </div>
+    </script>
+
+    <script id="template-issue-detail-nav" type="text/x-handlebars-template">
+        <ul class="nav nav-pills issue-detail-nav" role="tablist">
+            {{#each issues}}
+                <li role="presentation"
+                  {{#is id ../id}}class="active"{{/is}}>
+                    <a href="#issues/{{name}}">{{name}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    </script>
+
     <script id="issue-detail-page" type="text/x-handlebars-template">
-        <div class="container">
-            <h1 class="text-center">{{name}}</h1>
-            <div id="candidate-issue-list" class="row">
+        <div class="container page">
+            <hr />
+            <h1 class="text-center" style="color:white;">{{name}}</h1>
+            <hr />
+            <div id="candidate-issue-list">
             </div>
         </div>
     </script>
 
     <script id="candidate-detail-page" type="text/x-handlebars-template">
-        <div class="container">
+        <div class="container page">
             <div class="profile centered">
-                <div style="height:192px">
-                    <div class="candidate-image" style="float:left; width:192px;">
-                        <img class="picture img-circle" src="img/Lynne.jpeg">
+                <div class="profile-header">
+                    <div class="candidate-image profile-image-container" style="float:left;">
+                        <img class="picture img-circle" src="{{pic}}">
                     </div>
-                    <div style="margin-left:192px; padding-left:7.5%; padding-top:8px">
-                        <p style="font-size:40px">{{name}}</p>
-                        <p style="font-size:20px; margin-left:10%">{{party}}</p>
-                        <p style="font-size:20px; margin-left:10%">Age {{age}}, {{gender}}</p>
+                    <div class="profile-bio-container">
+                        <p class="profile-name">{{name}}</p>
+                        <p class="profile-sub">{{party}}</p>
+                        <p class="profile-sub">Age {{age}}, {{gender}}</p>
+                        <p class="profile-sub"><a href="{{website}}">{{website}}</a></p>
                     </div>
                 </div>
-                <div style="margin-top:32px">
-                    <img src="img/facebook.png" width="48" height="48" style="margin-left:8px; margin-right:8px">
-                    <img src="img/twitter.png" width="48" height="48" style="margin-right:8px">
-                    <img src="img/linkedin.png" width="48" height="48" style="margin-right:8px">
+                <div>
+                    <img src="img/facebook.png" class="social-button" style="margin-left:8px; margin-right:8px">
+                    <img src="img/twitter.png" class="social-button" style="margin-right:8px">
+                    <img src="img/linkedin.png" class="social-button" style="margin-right:8px">
                 </div>
                 <div id="profile-issue-list"></div>
             </div>
@@ -86,8 +125,8 @@
     <script id="template-profile-issue" type="text/x-handlebars-template">
         <hr />
         <div class="row">
-            <h3>{{name}}</h3>
-            <div style="margin-top:16px; padding-left:24px">{{text}}</div>
+            <h3 style="padding-left:16px"><b>{{name}}</b></h3>
+            <div style="margin-top:16px; padding-left:24px">{{{text}}}</div>
         </div>
     </script>
 
@@ -101,7 +140,7 @@
         <div class="col-xs-6 col-sm-3 candidate-tile">
             <div>
                 <div class="candidate-image">
-                		<img class="picture img-circle" src="{{pic}}">
+                    <img class="picture img-circle" src="{{pic}}">
                 </div>
             </div>
             <div class="text-center" style="padding:8px">
@@ -112,15 +151,15 @@
 
     <script id="template-candidate-issue" type="text/x-handlebars-template">
         <div class="row candidate-issue">
-	          <img src="{{pic}}" class="picture img-circle" >
+            <img src="{{pic}}" class="picture img-circle" >
             <div class="candidate-issue-text points">
                 <p><strong>{{name}}</strong></p>
-                <p>{{text}}</p>
+                <p>{{{text}}}</p>
             </div>
 
-  	        <div class="show-more">
-	  	          <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
-      	    </div>
+            <div class="show-more">
+                <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
+            </div>
         </div>
     </script>
 
