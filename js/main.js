@@ -1,3 +1,19 @@
+Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
+});
+
+Handlebars.registerHelper('is', function(v1, v2, options) {{
+	return (v1 === v2 ? options.fn(this) : options.inverse(this));
+}})
+
 function IssueCollection(json) {
 	this.issues = [];
 }
@@ -134,7 +150,9 @@ function showAboutPage() {
 
 function showIssueDetailPage(issue) {
 	var foundIssue = issueCollection.findByName(issue.id);
-	displayPage('#issue-detail-page', foundIssue);
+	displayPage('#issue-detail-page', $.extend({
+		'issues': issueCollection.issues,
+	}, foundIssue));
 	setTitle('The Issues');
 
 	candidateCollection.candidates.forEach(function (candidate) {
