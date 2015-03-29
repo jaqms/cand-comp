@@ -40,7 +40,10 @@
 
     <script id="candidates-page" type="text/x-handlebars-template">
         <div class="container">
-        CANDIDATES
+            <div class="candidate-list" style="display:block; margin-left:auto; margin-right:auto; padding-top:5%;">
+                <div id="candidate-tile-list" class="row">
+                </div>
+            </div>
         </div>
     </script>
 
@@ -61,6 +64,18 @@
     <script id="template-issue-tile" type="text/x-handlebars-template">
         <div class="col-xs-6">
             <a class="btn btn-default btn-lg issue-list-btn" href="#issues/{{name}}">{{name}}</a>
+        </div>
+    </script>
+
+    <script id="template-candidate-tile" type="text/x-handlebars-template">
+        <div class="col-xs-6 col-sm-3">
+            <div>
+                <div class="candidate-image" style="background-image: url(img/Lynne.jpeg)">
+                </div>
+            </div>
+            <div class="text-center" style="padding:8px">
+                {{name}}
+            </div>
         </div>
     </script>
 
