@@ -106,3 +106,9 @@ body {
 .issue-list-btn {
   white-space: normal;
 }
+
+@media (min-width: 768px) {
+  .candidate-image .picture {
+    width: 192px;
+  }
+}
