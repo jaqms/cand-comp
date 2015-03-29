@@ -64,6 +64,35 @@ body {
   color: white;
 }
 
+.profile-image-container {
+	width:96px;
+}
+
+.profile-bio-container {
+  	 margin-left:96px;
+  	 padding-left:7.5%;
+  	 padding-top:8px;
+  	 overflow:hidden;
+}
+
+.profile-header {
+	padding-bottom:5%;
+}
+
+.profile-name {
+	font-size:24px;
+}
+
+.profile-sub {
+	line-height:12px;
+	font-size:14px;
+}
+
+.social-button {
+  	width:32px;
+  	height:32px;
+  }
+
 .candidate-image .picture {
   float: none;
   position: static;
@@ -138,7 +167,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.1);
 	padding:5%;
 	margin-top:5%;
-	width:80%;
+	width:100%;
 	color:dddddd;
 }
 
@@ -159,5 +188,38 @@ body {
 @media (min-width: 768px) {
   .candidate-image .picture {
     width: 192px;
+  }
+
+  .profile-image-container {
+  	width:192px;
+  }
+
+  .profile-bio-container {
+  	 margin-left:192px;
+  	 padding-left:7.5%;
+  	 padding-top:8px
+  }
+
+  .profile-header {
+  	padding-bottom:7.5%;
+  }
+
+  .profile-name {
+  	font-size:40px;
+  }
+
+  .profile-sub {
+  	font-size:20px;
+  	margin-left:10%;
+  	line-height:20px;
+  }
+
+  .profile {
+  	width:80%;
+  }
+
+  .social-button {
+  	width:48px;
+  	height:48px;
   }
 }
