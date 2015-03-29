@@ -18,7 +18,7 @@ IssueCollection.prototype.findByName = function (name) {
 }
 
 function Issue(json) {
-	this.id = json['gsx$name']['$t'];
+	this.id = json['gsx$name']['$t'].replace(/ /g, '').toLowerCase();
 	this.name = json['gsx$name']['$t'];
 	this.slug = json['gsx$slug']['$t'];
 	this.icon = json['gsx$icon']['$t'];
@@ -119,13 +119,12 @@ function showIssueDetailPage(issue) {
 	setTitle('The Issues');
 
 	candidateCollection.candidates.forEach(function (candidate) {
-		var issueNameKey = issue.id.replace(/ /g, '').toLowerCase();
 		var source = $('#template-candidate-issue').html();
 		var template = Handlebars.compile(source);
 		var html = template({
 			'pic': candidate.bioData.pic,
 			'name': candidate.bioData.name,
-			'text': candidate.issueData[issueNameKey]
+			'text': candidate.issueData[issue.id]
 		});
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
@@ -139,8 +138,23 @@ function showIssueDetailPage(issue) {
 }
 
 function showCandidateDetailPage(candidate) {
-	displayPage('#candidate-detail-page', candidate);
+	displayPage('#candidate-detail-page', candidate.bioData);
 	setTitle('Candidates');
+
+	Object.keys(candidate.issueData).forEach(function (issueKey) {
+		var matchingIssue = issueCollection.findByName(issueKey);
+		if (issueKey === 'name' || !matchingIssue)
+			return;
+
+		var source = $('#template-profile-issue').html();
+		var template = Handlebars.compile(source);
+		var html = template({
+			'name': matchingIssue.name,
+			'text': candidate.issueData[issueKey]
+		});
+		var row = $(html);
+		$('#profile-issue-list').append(row);
+	});
 }
 
 function displayPage(templateTag, data) {
@@ -163,7 +177,7 @@ function goToPage() {
 		if (page.indexOf("/") < 0) {
 			showIssuesPage();
 		} else if (parts.length === 2) {
-			showIssueDetailPage({id: parts[1]});
+			showIssueDetailPage({id: parts[1].replace(/ /g, '').toLowerCase()});
 		}
 	}
 	else if (page.indexOf("candidates") === 0) {

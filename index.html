@@ -62,15 +62,15 @@
 
     <script id="candidate-detail-page" type="text/x-handlebars-template">
         <div class="container">
-            <div class="profile centered" style="height:100%">
+            <div class="profile centered">
                 <div style="height:192px">
                     <div class="candidate-image" style="float:left; width:192px;">
                         <img class="picture img-circle" src="img/Lynne.jpeg">
                     </div>
                     <div style="margin-left:192px; padding-left:7.5%; padding-top:8px">
-                        <p style="font-size:40px">John Doe</p>
-                        <p style="font-size:20px; margin-left:10%">Democrat</p>
-                        <p style="font-size:20px; margin-left:10%">Age 92, Female</p>
+                        <p style="font-size:40px">{{name}}</p>
+                        <p style="font-size:20px; margin-left:10%">{{party}}</p>
+                        <p style="font-size:20px; margin-left:10%">Age {{age}}, {{gender}}</p>
                     </div>
                 </div>
                 <div style="margin-top:32px">
@@ -78,11 +78,18 @@
                     <img src="img/twitter.png" width="48" height="48" style="margin-right:8px">
                     <img src="img/linkedin.png" width="48" height="48" style="margin-right:8px">
                 </div>
-                <hr />
+                <div id="profile-issue-list"></div>
             </div>
         </div>
     </script>
 
+    <script id="template-profile-issue" type="text/x-handlebars-template">
+        <hr />
+        <div class="row">
+            <h3>{{name}}</h3>
+            <div style="margin-top:16px; padding-left:24px">{{text}}</div>
+        </div>
+    </script>
 
     <script id="template-issue-tile" type="text/x-handlebars-template">
         <div class="col-xs-6">
