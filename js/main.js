@@ -173,6 +173,9 @@ function goToPage() {
 	var page = document.URL.substring(document.URL.indexOf('#')+1);
 	var parts = page.split('/');
 
+	$('.navbar-nav li').removeClass('active');
+	$('.navbar-nav').find('[href="#' + page + '"]').parent().addClass('active');
+
 	if (page.indexOf("issues") === 0) {
 		if (page.indexOf("/") < 0) {
 			showIssuesPage();
