@@ -21,6 +21,16 @@ body {
  position: relative;
 }
 
+.candidate-tile {
+  text-align: center;
+  color: white;
+}
+
+.candidate-image .picture {
+  float: none;
+  position: static;
+}
+
 .centered {
 	display:block;
 	margin-left:auto;
@@ -85,14 +95,6 @@ body {
 	height:96px;
 }
 
-.candidate-issue > .candidate-issue-text {
-	float:left;
-	overflow:hidden;
-	padding-left:16px;
-	width:90%;
-	height:96px;
-}
-
 .candidate-issue.expanded {
   height: auto;
 }
@@ -107,4 +109,7 @@ body {
 	padding:5%;
 	margin-top:5%;
 	width:80%;
+
+.issue-list-btn {
+  white-space: normal;
 }

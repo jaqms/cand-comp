@@ -10,7 +10,7 @@ IssueCollection.prototype.findByName = function (name) {
 	var issueFind = this.issues.filter(function (c) {
 		return c.id === name;
 	});
-	
+
 	if (issueFind.length === 1)
 		return issueFind[0];
 	else
@@ -30,14 +30,14 @@ function CandidateCollection() {
 }
 
 CandidateCollection.prototype.add = function (candidate) {
-	this.candidates.push(candidate);	
+	this.candidates.push(candidate);
 }
 
 CandidateCollection.prototype.findByName = function (name) {
 	var candidateFind = this.candidates.filter(function (c) {
 		return c.id === name;
 	});
-	
+
 	if (candidateFind.length === 1)
 		return candidateFind[0];
 	else
@@ -117,6 +117,12 @@ function showIssueDetailPage(issue) {
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
 	});
+
+	$('.candidate-issue .show-more a').on('click', function(evt) {
+		evt.preventDefault();
+		var target = evt.currentTarget;
+		expandCandidateIssue($(target).closest('.candidate-issue'));
+	});
 }
 
 function showCandidateDetailPage(candidate) {
@@ -130,6 +136,30 @@ function displayPage(templateTag, data) {
 	$('#page-holder').html(html);
 }
 
+function expandCandidateIssue($el) {
+	$el.toggleClass('expanded');
+	$el.find('.expand-icon').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+}
+
+function goToPage() {
+	var page = document.URL.substring(document.URL.indexOf('#')+1);
+	var parts = page.split('/');
+
+	if (page.indexOf("issues") === 0) {
+		if (page.indexOf("/") < 0) {
+			showIssuesPage();
+		} else if (parts.length === 2) {
+			showIssueDetailPage({id: parts[1]});
+		}
+	}
+	else if (page.indexOf("candidates") === 0) {
+		showCandidatesPage();
+	}
+	else if (page.indexOf("about") === 0) {
+		showAboutPage();
+	}
+}
+
 window.onload = function () {
 	window.issueCollection = new IssueCollection();
 	window.candidateCollection = new CandidateCollection();
@@ -137,14 +167,12 @@ window.onload = function () {
 	window.ISSUE_SHEET_ID = 4;
 	window.CANDIDATE_BIO_SHEET_ID = 2;
 	window.CANDIDATE_ISSUE_SHEET_ID = 3;
-	
+
 	getGoogleSheet(ISSUE_SHEET_ID, function (data) {
 		data['feed']['entry'].forEach(function (entry) {
 			var issue = new Issue(entry);
 			issueCollection.add(issue);
 		});
-
-		showIssuesPage();
 
 		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
 			data['feed']['entry'].forEach(function (entry) {
@@ -152,7 +180,7 @@ window.onload = function () {
 				candidate.setBioData(entry);
 				candidateCollection.add(candidate);
 			});
-			
+
 			getGoogleSheet(CANDIDATE_ISSUE_SHEET_ID, function (data) {
 				data['feed']['entry'].forEach(function (entry) {
 					var candidate = candidateCollection.findByName(entry['gsx$name']['$t']);
@@ -160,23 +188,15 @@ window.onload = function () {
 						candidate.setIssueData(entry);
 					}
 				});
+
+				goToPage();
+				// showIssuesPage();
+
 			});
 		});
 	});
 
 	$(window).bind('hashchange', function(e) {
-		var page = document.URL.substring(document.URL.indexOf('#')+1);
-		
-		if (page.indexOf("issues") === 0) {
-			if (page.indexOf("/") < 0) {
-				showIssuesPage();
-			}
-		}
-		else if (page.indexOf("candidates") === 0) {
-			showCandidatesPage();
-		}
-		else if (page.indexOf("about") === 0) {
-			showAboutPage();
-		}
+		goToPage();
 	});
 }

@@ -55,11 +55,11 @@
     <script id="issue-detail-page" type="text/x-handlebars-template">
         <div class="container">
             <h1 class="text-center">{{name}}</h1>
-            <div id="candidate-issue-list" class="row">             
+            <div id="candidate-issue-list" class="row">
             </div>
         </div>
     </script>
-    
+   
     <script id="candidate-detail-page" type="text/x-handlebars-template">
         <div class="container">
             <div class="profile centered">
@@ -68,6 +68,7 @@
         </div>
     </script>
 
+
     <script id="template-issue-tile" type="text/x-handlebars-template">
         <div class="col-xs-6">
             <a class="btn btn-default btn-lg issue-list-btn" href="#issues/{{name}}">{{name}}</a>
@@ -75,7 +76,7 @@
     </script>
 
     <script id="template-candidate-tile" type="text/x-handlebars-template">
-        <div class="col-xs-6 col-sm-3">
+        <div class="col-xs-6 col-sm-3 candidate-tile">
             <div>
                 <div class="candidate-image centered" style="background-image: url(img/Lynne.jpeg)">
                 </div>
@@ -88,11 +89,15 @@
 
     <script id="template-candidate-issue" type="text/x-handlebars-template">
         <div class="row candidate-issue">
-            <img>
-            <div class="candidate-issue-text">
-                <div>{{name}}</div>
-                <div>{{text}}</div>
+	          <img src="{{pic}}" class="picture img-circle" >
+            <div class="candidate-issue-text points">
+                <p><strong>{{name}}</strong></p>
+                <p>{{text}}</p>
             </div>
+
+  	        <div class="show-more">
+	  	          <a href="#" role="button"><span class="glyphicon glyphicon-chevron-down expand-icon"></span></a>
+      	    </div>
         </div>
     </script>
 
