@@ -29,21 +29,13 @@ body {
 .candidate-image .picture {
   float: none;
   position: static;
+  margin-right: 0;
 }
 
 .centered {
 	display:block;
 	margin-left:auto;
 	margin-right:auto;
-}
-
-.candidate-image {
-	width:192px;
-	height:192px;
-	border-radius:50%;
-	background-repeat:no-repeat;
-	background-position:50%;
-	background-size:cover;
 }
 
 #page-holder {
@@ -110,7 +102,14 @@ body {
 	margin-top:5%;
 	width:80%;
 	color:dddddd;
+}
 
 .issue-list-btn {
   white-space: normal;
+}
+
+@media (min-width: 768px) {
+  .candidate-image .picture {
+    width: 192px;
+  }
 }

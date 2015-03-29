@@ -73,8 +73,13 @@ function getGoogleSheet(id, callback) {
 		});
 }
 
+function setTitle(title) {
+	$('.navbar-brand').html(title || '');
+}
+
 function showIssuesPage() {
 	displayPage('#issues-page');
+	setTitle('The Issues');
 
 	issueCollection.issues.forEach(function (issue) {
 		var source = $('#template-issue-tile').html();
@@ -90,11 +95,12 @@ function showIssuesPage() {
 
 function showCandidatesPage() {
 	displayPage('#candidates-page');
+	setTitle('Candidates');
 
 	candidateCollection.candidates.forEach(function (candidate) {
 		var source = $('#template-candidate-tile').html();
 		var template = Handlebars.compile(source);
-		var html = template({'name': candidate.bioData.name});
+		var html = template({'pic': candidate.bioData.pic, 'name': candidate.bioData.name});
 		var tile = $(html);
 		tile.bind('click', function (candidate) {
 			showCandidateDetailPage(candidate);
@@ -105,15 +111,22 @@ function showCandidatesPage() {
 
 function showAboutPage() {
 	displayPage('#about-page');
+	setTitle();
 }
 
 function showIssueDetailPage(issue) {
 	displayPage('#issue-detail-page', issue);
+	setTitle('The Issues');
+
 	candidateCollection.candidates.forEach(function (candidate) {
 		var issueNameKey = issue.id.replace(/ /g, '').toLowerCase();
 		var source = $('#template-candidate-issue').html();
 		var template = Handlebars.compile(source);
-		var html = template({'name': candidate.bioData.name, 'text': candidate.issueData[issueNameKey]});
+		var html = template({
+			'pic': candidate.bioData.pic,
+			'name': candidate.bioData.name,
+			'text': candidate.issueData[issueNameKey]
+		});
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
 	});
@@ -127,6 +140,7 @@ function showIssueDetailPage(issue) {
 
 function showCandidateDetailPage(candidate) {
 	displayPage('#candidate-detail-page', candidate);
+	setTitle('Candidates');
 }
 
 function displayPage(templateTag, data) {
