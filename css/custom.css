@@ -178,6 +178,7 @@ body {
 .issue-detail-nav {
   white-space: nowrap;
   overflow-x: auto;
+  text-align: center;
 }
 
 .issue-detail-nav > li {
