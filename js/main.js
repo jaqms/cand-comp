@@ -196,8 +196,8 @@ window.onload = function () {
 	window.candidateCollection = new CandidateCollection();
 
 	window.ISSUE_SHEET_ID = 4;
-	window.CANDIDATE_BIO_SHEET_ID = 2;
-	window.CANDIDATE_ISSUE_SHEET_ID = 3;
+	window.CANDIDATE_BIO_SHEET_ID = 3;
+	window.CANDIDATE_ISSUE_SHEET_ID = 2;
 
 	getGoogleSheet(ISSUE_SHEET_ID, function (data) {
 		data['feed']['entry'].forEach(function (entry) {
