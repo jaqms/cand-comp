@@ -113,7 +113,11 @@ function showIssueDetailPage(issue) {
 		var issueNameKey = issue.id.replace(/ /g, '').toLowerCase();
 		var source = $('#template-candidate-issue').html();
 		var template = Handlebars.compile(source);
-		var html = template({'name': candidate.bioData.name, 'text': candidate.issueData[issueNameKey]});
+		var html = template({
+			'pic': candidate.bioData.pic,
+			'name': candidate.bioData.name,
+			'text': candidate.issueData[issueNameKey]
+		});
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
 	});
