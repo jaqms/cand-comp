@@ -212,6 +212,7 @@ window.onload = function () {
 		});
 
 		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
+			console.log(data)
 			data['feed']['entry'].forEach(function (entry) {
 				var candidate = new Candidate(entry['gsx$name']['$t']);
 				candidate.setBioData(entry);
