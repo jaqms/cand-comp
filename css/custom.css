@@ -21,7 +21,17 @@ body {
  position: relative;
 }
 
-.candidate-image {
+.candidate-tile {
+  text-align: center;
+  color: white;
+}
+
+.candidate-image .picture {
+  float: none;
+  position: static;
+}
+
+/*.candidate-image {
 	display:block;
 	margin-left:auto;
 	margin-right:auto;
@@ -32,7 +42,7 @@ body {
 	background-position:50%;
 	background-size:cover;
 }
-
+*/
 #page-holder {
   height:100%;
 }
