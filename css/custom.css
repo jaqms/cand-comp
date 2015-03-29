@@ -186,6 +186,14 @@ body {
   display: inline-block;
 }
 
+.load-progress-container {
+  margin-top: 100px;
+}
+
+.load-progress-container .status {
+  color: white;
+}
+
 @media (min-width: 768px) {
   .candidate-image .picture {
     width: 192px;

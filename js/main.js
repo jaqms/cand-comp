@@ -270,6 +270,11 @@ function goToPage() {
 	}
 }
 
+function updateLoader(status, value) {
+	$('.load-progress-container .status').html(status);
+	$('.load-progress .progress-bar').css({width: value + '%'});
+}
+
 window.onload = function () {
 	window.issueCollection = new IssueCollection();
 	window.candidateCollection = new CandidateCollection();
@@ -278,14 +283,20 @@ window.onload = function () {
 	window.CANDIDATE_BIO_SHEET_ID = 3;
 	window.CANDIDATE_ISSUE_SHEET_ID = 2;
 
+	updateLoader('Loading The Issues...', 25);
+
 	getGoogleSheet(ISSUE_SHEET_ID, function (data) {
+		updateLoader('Loading The Candidates...', 50);
+
 		data['feed']['entry'].forEach(function (entry) {
 			var issue = new Issue(entry);
 			issueCollection.add(issue);
 		});
 
 		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
-			console.log(data)
+			console.log(data);
+			updateLoader('Loading The Platforms...', 75);
+
 			data['feed']['entry'].forEach(function (entry) {
 				var candidate = new Candidate(entry['gsx$name']['$t']);
 				candidate.setBioData(entry);
@@ -293,6 +304,8 @@ window.onload = function () {
 			});
 
 			getGoogleSheet(CANDIDATE_ISSUE_SHEET_ID, function (data) {
+				updateLoader('Done!', 100);
+
 				data['feed']['entry'].forEach(function (entry) {
 					var candidate = candidateCollection.findByName(entry['gsx$name']['$t']);
 					if (candidate) {
