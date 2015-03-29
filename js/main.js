@@ -100,7 +100,7 @@ function showCandidatesPage() {
 	candidateCollection.candidates.forEach(function (candidate) {
 		var source = $('#template-candidate-tile').html();
 		var template = Handlebars.compile(source);
-		var html = template({'name': candidate.bioData.name});
+		var html = template({'pic': candidate.bioData.pic, 'name': candidate.bioData.name});
 		var tile = $(html);
 		tile.bind('click', function (candidate) {
 			showCandidateDetailPage(candidate);
