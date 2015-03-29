@@ -134,6 +134,25 @@ function expandCandidateIssue($el) {
 	$el.find('.expand-icon').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
 }
 
+function goToPage() {
+	var page = document.URL.substring(document.URL.indexOf('#')+1);
+	var parts = page.split('/');
+
+	if (page.indexOf("issues") === 0) {
+		if (page.indexOf("/") < 0) {
+			showIssuesPage();
+		} else if (parts.length === 2) {
+			showIssueDetailPage({id: parts[1]});
+		}
+	}
+	else if (page.indexOf("candidates") === 0) {
+		showCandidatesPage();
+	}
+	else if (page.indexOf("about") === 0) {
+		showAboutPage();
+	}
+}
+
 window.onload = function () {
 	window.issueCollection = new IssueCollection();
 	window.candidateCollection = new CandidateCollection();
@@ -147,8 +166,6 @@ window.onload = function () {
 			var issue = new Issue(entry);
 			issueCollection.add(issue);
 		});
-
-		showIssuesPage();
 
 		getGoogleSheet(CANDIDATE_BIO_SHEET_ID, function (data) {
 			data['feed']['entry'].forEach(function (entry) {
@@ -164,23 +181,15 @@ window.onload = function () {
 						candidate.setIssueData(entry);
 					}
 				});
+
+				goToPage();
+				// showIssuesPage();
+
 			});
 		});
 	});
 
 	$(window).bind('hashchange', function(e) {
-		var page = document.URL.substring(document.URL.indexOf('#')+1);
-
-		if (page.indexOf("issues") === 0) {
-			if (page.indexOf("/") < 0) {
-				showIssuesPage();
-			}
-		}
-		else if (page.indexOf("candidates") === 0) {
-			showCandidatesPage();
-		}
-		else if (page.indexOf("about") === 0) {
-			showAboutPage();
-		}
+		goToPage();
 	});
 }
