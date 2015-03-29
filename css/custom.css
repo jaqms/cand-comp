@@ -7,6 +7,26 @@ body {
   background-color: #004586;
 }
 
+.navbar-header,
+.navbar-inverse,
+.navbar-collapse {
+  background-color: #7395B8;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand {
+  color: black;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #7395B8;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #004586;
+}
+
 .page {
 	animation: fadein 0.5s;
 	-moz-animation: fadein 0.5s; /* Firefox */
