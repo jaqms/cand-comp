@@ -26,6 +26,8 @@
       </div>
     </nav>
 
+    <div id="issue-detail-nav-holder"></div>
+
     <div id="page-holder">
     </div>
 
@@ -52,8 +54,8 @@
         </div>
     </script>
 
-    <script id="issue-detail-page" type="text/x-handlebars-template">
-        <ul class="nav nav-pills" role="tablist">
+    <script id="template-issue-detail-nav" type="text/x-handlebars-template">
+        <ul class="nav nav-pills issue-detail-nav" role="tablist">
             {{#each issues}}
                 <li role="presentation"
                   {{#is id ../id}}class="active"{{/is}}>
@@ -61,7 +63,9 @@
                 </li>
             {{/each}}
         </ul>
+    </script>
 
+    <script id="issue-detail-page" type="text/x-handlebars-template">
         <div class="container page">
             <hr />
             <h1 class="text-center" style="color:white;">{{name}}</h1>

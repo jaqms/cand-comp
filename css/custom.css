@@ -146,6 +146,16 @@ body {
   white-space: normal;
 }
 
+.issue-detail-nav {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.issue-detail-nav > li {
+  float: none;
+  display: inline-block;
+}
+
 @media (min-width: 768px) {
   .candidate-image .picture {
     width: 192px;

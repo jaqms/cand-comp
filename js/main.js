@@ -148,11 +148,47 @@ function showAboutPage() {
 	setTitle();
 }
 
+function hideIssueDetailNav() {
+	var navHolder = $('#issue-detail-nav-holder');
+	navHolder.empty();
+}
+
+function showIssueDetailNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+
+	if (navHolder.is(':empty')) {
+		var source = $('#template-issue-detail-nav').html();
+		var template = Handlebars.compile(source);
+		var html = template($.extend({'issues': issueCollection.issues}, issue));
+		navHolder.html(html);
+	}
+
+	activateIssueInNav(issue);
+	centerIssueInNav(issue);
+}
+
+function activateIssueInNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+	navHolder.find('li').removeClass('active');
+	navHolder.find('a[href="#issues/' + issue.name + '"]').parent().addClass('active');
+}
+
+function centerIssueInNav(issue) {
+	var navHolder = $('#issue-detail-nav-holder');
+	var navList = navHolder.find('.issue-detail-nav');
+	var activeTab = navList.find('.active');
+	var lastTab = navList.find('li:last-child');
+
+	var currentScrollX = navList.scrollLeft();
+	var activeTabX = activeTab.position().left;
+	var centeredX = (navHolder.width() - activeTab.width()) / 2;
+
+	navList.scrollLeft(activeTabX + currentScrollX - centeredX);
+}
+
 function showIssueDetailPage(issue) {
 	var foundIssue = issueCollection.findByName(issue.id);
-	displayPage('#issue-detail-page', $.extend({
-		'issues': issueCollection.issues,
-	}, foundIssue));
+	displayPage('#issue-detail-page', foundIssue);
 	setTitle('The Issues');
 
 	candidateCollection.candidates.forEach(function (candidate) {
@@ -195,6 +231,12 @@ function showCandidateDetailPage(candidate) {
 }
 
 function displayPage(templateTag, data) {
+	if (templateTag === '#issue-detail-page') {
+		showIssueDetailNav(data);
+	} else {
+		hideIssueDetailNav();
+	}
+
 	var source = $(templateTag).html();
 	var template = Handlebars.compile(source);
 	var html = template(data || {});
