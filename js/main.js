@@ -120,7 +120,8 @@ function showAboutPage() {
 }
 
 function showIssueDetailPage(issue) {
-	displayPage('#issue-detail-page', issue);
+	var foundIssue = issueCollection.findByName(issue.id);
+	displayPage('#issue-detail-page', foundIssue);
 	setTitle('The Issues');
 
 	candidateCollection.candidates.forEach(function (candidate) {
