@@ -50,6 +50,11 @@ function Candidate(id) {
 	this.issueData = {};
 }
 
+Candidate.formatIssueText = function (text) {
+	var newText = text.replace(/; /g, '<br />');
+	return newText;
+}
+
 Candidate.prototype.setBioData = function (json) {
 	Object.keys(json).forEach(function (i) {
 		if (i.indexOf("gsx") === 0) {
@@ -124,7 +129,7 @@ function showIssueDetailPage(issue) {
 		var html = template({
 			'pic': candidate.bioData.pic,
 			'name': candidate.bioData.name,
-			'text': candidate.issueData[issue.id]
+			'text': Candidate.formatIssueText(candidate.issueData[issue.id])
 		});
 		var row = $(html);
 		$('#candidate-issue-list').append(row);
@@ -150,7 +155,7 @@ function showCandidateDetailPage(candidate) {
 		var template = Handlebars.compile(source);
 		var html = template({
 			'name': matchingIssue.name,
-			'text': candidate.issueData[issueKey]
+			'text': Candidate.formatIssueText(candidate.issueData[issueKey])
 		});
 		var row = $(html);
 		$('#profile-issue-list').append(row);
