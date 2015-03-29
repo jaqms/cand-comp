@@ -51,8 +51,21 @@ function Candidate(id) {
 }
 
 Candidate.formatIssueText = function (text) {
-	var newText = text.replace(/; /g, '<br />');
-	return newText;
+	if (text.length === 0) {
+		return "n/a"
+	}
+	var parts = text.split('; ');
+	if (parts.length > 0) {
+		var finalText = "";
+		parts.forEach(function (part) {
+			console.log(part)
+			var subParts = part.split(': ');
+			var newText = "<b>" + subParts[0] + "</b>: " + subParts[1] + "<br />";
+			finalText += newText;
+		});
+		return finalText;
+	}
+	return text;
 }
 
 Candidate.prototype.setBioData = function (json) {
